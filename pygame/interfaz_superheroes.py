@@ -240,8 +240,11 @@ class interfas:
             if self.combo2.getIndex() != -1 and self.imagenseleccionada !="":
                 self.inst.update_node_value(self.combo2.getIndex()+1, self.imagenseleccionada)
         self.imagenseleccionada=""
-        data_list = [str(x) for x in range(1, self.inst.show_SLL_length() + 1)]
-        self.combo2.updateOptions(data_list)
+        if self.inst.show_SLL_length()>=1:
+            data_list = [str(x) for x in range(1, self.inst.show_SLL_length() + 1)]
+            self.combo2.updateOptions(data_list)
+        else:
+            self.combo2.updateOptions("1")
 
     
     def retornarimagenpresionada(self):

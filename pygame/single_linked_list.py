@@ -144,7 +144,7 @@ class SingleLinkedList:
     
 
     def show_SLL_length(self):
-        print("El tamaño de la SLL es: ", self.length)
+        return self.length
 
     def search_an_element_and_return_index(self, value):
         if(self.length==0):

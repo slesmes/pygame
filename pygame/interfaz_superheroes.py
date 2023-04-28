@@ -44,6 +44,7 @@ class interfas:
         self.metodoflash= pygame.Rect(891,224,175,175)
         self.metododetective= pygame.Rect(677,224,175,175)
         self.cuadradogithub = pygame.Rect(706,619,70,60)
+        self.seleccionarmarcar = pygame.Rect(0,0,0,0)
         #booleanos
         self.boolbatman=False
         self.booldetective=False
@@ -66,7 +67,7 @@ class interfas:
         self.combo_rect = pygame.Rect(310,130,306,51)
         self.combo = ComboBox(self.screen ,["agregar al inicio", "agregar al final", "eliminar el primero", "eliminar el ultimo", "invertir", "eliminar todos", "eliminar con indice", "insertar con indice", "actualizar con indice"], self.combo_rect, self.gris, "Arial", 22, 5, self.negro, self.negro, 40, "Seleccione una opción")
         self.combo2_rect= pygame.Rect(815,126,100,51)
-        self.combo2 = ComboBox(self.screen ,["1","2","3","4","5","6"], self.combo2_rect, self.gris, "Arial", 22, 5, self.negro, self.negro, 40, "")
+        self.combo2 = ComboBox(self.screen ,["1"], self.combo2_rect, self.gris, "Arial", 22, 5, self.negro, self.negro, 40, "")
         #botones
         self.clickbotonSLL=False
         self.clickbotonDLL=False
@@ -151,9 +152,11 @@ class interfas:
                 self.inst.eliminate_all_elements()
                 self.volveralinicio()
             if self.clickbotones(botonmetodos,self.clickaceptarmetodos):
+                self.seleccionarmarcar = (0,0,0,0)
                 self.metodosSLLsinIndex()
                 self.inst.show_list()
             self.retornarimagenpresionada()
+            pygame.draw.rect(self.screen,self.verde,self.seleccionarmarcar,5,0)
             self.combo.draw()
             self.combo2.draw()
             
@@ -209,50 +212,57 @@ class interfas:
             self.imagen(886,570,imagen,100)
     
     def metodosSLLsinIndex(self):
-        if self.combo.getIndex() == 1:
+        if self.combo.getIndex() == 0:
             if self.imagenseleccionada != "" and self.inst.length<12:
                 self.inst.create_node_sll_unshift(self.imagenseleccionada)
-        if self.combo.getIndex() == 2:
+        if self.combo.getIndex() == 1:
             if self.imagenseleccionada != "" and self.inst.length<12:
                 self.inst.create_node_sll_ends(self.imagenseleccionada)
-        if self.combo.getIndex() == 3:
+        if self.combo.getIndex() == 2:
             if self.inst.length<12:
                 self.inst.shift_node_sll()
-        if self.combo.getIndex() == 4:
+        if self.combo.getIndex() == 3:
             if self.inst.length<12:
                 self.inst.delete_node_sll_pop()
-        if self.combo.getIndex() == 5:
+        if self.combo.getIndex() == 4:
             if self.inst.length<12:
                 self.inst.reverse()
-        if self.combo.getIndex() == 6:
+        if self.combo.getIndex() == 5:
             if self.inst.length<12:
                 self.inst.eliminate_all_elements()
-        if self.combo.getIndex() == 7:
+        if self.combo.getIndex() == 6:
             if self.combo2.getIndex() != -1:
-                self.inst.remove_node(self.combo2.getIndex())
+                self.inst.remove_node(self.combo2.getIndex()+1)
+        if self.combo.getIndex() == 7:
+            if self.combo2.getIndex() != -1 and self.imagenseleccionada !="":
+                self.inst.add_node_in_index(self.combo2.getIndex()+1,self.imagenseleccionada)
         if self.combo.getIndex() == 8:
             if self.combo2.getIndex() != -1 and self.imagenseleccionada !="":
-                self.inst.add_node_in_index(self.combo2.getIndex(),self.imagenseleccionada)
-        if self.combo.getIndex() == 9:
-            if self.combo2.getIndex() != -1 and self.imagenseleccionada !="":
-                self.inst.update_node_value(self.combo2.getIndex(), self.imagenseleccionada)
+                self.inst.update_node_value(self.combo2.getIndex()+1, self.imagenseleccionada)
         self.imagenseleccionada=""
+        data_list = [str(x) for x in range(1, self.inst.show_SLL_length() + 1)]
+        self.combo2.updateOptions(data_list)
 
     
     def retornarimagenpresionada(self):
         if self.clickbotones(self.metodobatman, self.boolbatman):
             self.imagenseleccionada="batman"
+            self.seleccionarmarcar = self.metodobatman
             return True
         elif self.clickbotones(self.metodosuperman, self.boolsuperman):
+            self.seleccionarmarcar = self.metodosuperman
             self.imagenseleccionada="superman"
             return True
         elif self.clickbotones(self.metodoflash, self.boolflash):
             self.imagenseleccionada="flash"
+            self.seleccionarmarcar = self.metodoflash
             return True
         elif self.clickbotones(self.metodomujermaravilla,self.boolmujermaravilla):
+            self.seleccionarmarcar = self.metodomujermaravilla
             self.imagenseleccionada="mujer maravilla"
             return True
         elif self.clickbotones(self.metododetective,self.booldetective):
+            self.seleccionarmarcar = self.metododetective
             self.imagenseleccionada="detective marciano"
             return True
         

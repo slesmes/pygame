@@ -151,16 +151,15 @@ class SingleLinkedList:
         if(self.length==0):
             print('La lista esta vacia')
         elif(self.head.value==value):
-            print('El indice donde se encuentra el elemento es 1')
+            return 1
         elif(self.tail.value==value):
-            print('El inidice en el que se encuentra el elemento es: ',self.length)
+            return self.length
         else:
             current_node=self.head
             counter=1
             while(current_node!=None):
                 if(current_node.value==value):
-                    print('El elemento se encuentra en la posicion', counter)
-                    break
+                    return counter
                 else:
                     current_node=current_node.next
                     counter+=1
@@ -280,15 +279,26 @@ class SingleLinkedList:
             current_node=current_node.next
         print(values)
 
+    def unir_duplicados(self):
+        if self.head is None:
+            return
+        index=1
+        
+        values=set()
+        for item in self.show_list():
+            if self.validate_has_duplicate(item):
+                index2=1
+                for item2 in self.show_list():
+                    if item2 == item and item in values:
+                        self.remove_node(index2)
+                        self.add_node_in_index(index,item)
+                    index2+=1 
+            if item not in values:
+                values.add(item)
+            index+=1
+                        
 
-                    
 
-
-            
-
-
-
-                    
 
 
     def empty_list(self):

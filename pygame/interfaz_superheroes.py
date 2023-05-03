@@ -65,7 +65,7 @@ class interfas:
         self.imagenseleccionada=""
         #combobox
         self.combo_rect = pygame.Rect(310,130,306,51)
-        self.combo = ComboBox(self.screen ,["agregar al inicio", "agregar al final", "eliminar el primero", "eliminar el ultimo", "invertir", "eliminar todos", "eliminar con indice", "insertar con indice", "actualizar con indice"], self.combo_rect, self.gris, "Arial", 22, 5, self.negro, self.negro, 40, "Seleccione una opción")
+        self.combo = ComboBox(self.screen ,["agregar al inicio", "agregar al final", "eliminar el primero", "eliminar el ultimo", "invertir", "eliminar todos", "eliminar con indice", "insertar con indice", "actualizar con indice", "remover duplicados"], self.combo_rect, self.gris, "Arial", 22, 5, self.negro, self.negro, 40, "Seleccione una opción")
         self.combo2_rect= pygame.Rect(815,126,100,51)
         self.combo2 = ComboBox(self.screen ,["1"], self.combo2_rect, self.gris, "Arial", 22, 5, self.negro, self.negro, 40, "")
         #botones
@@ -239,6 +239,9 @@ class interfas:
         if self.combo.getIndex() == 8:
             if self.combo2.getIndex() != -1 and self.imagenseleccionada !="":
                 self.inst.update_node_value(self.combo2.getIndex()+1, self.imagenseleccionada)
+        if self.combo.getIndex() == 9:
+            if self.inst.length<12:
+                self.inst.eliminate_all_duplicates()
         self.imagenseleccionada=""
         if self.inst.show_SLL_length()>=1:
             data_list = [str(x) for x in range(1, self.inst.show_SLL_length() + 1)]

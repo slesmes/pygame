@@ -23,6 +23,7 @@ class SingleLinkedList:
             current_node = current_node.next
         # Imprimimos la lista
         print(array_with_nodes_value)
+        return array_with_nodes_value
     
     def create_node_sll_ends(self, value):
         # Creamos una variable que va a tener la estructura de un nodo
@@ -229,6 +230,66 @@ class SingleLinkedList:
                     print(" >>> El índice no es accesible <<< ")
             return True
         return False
+    
+    def eliminate_duplicate(self,value):
+        if self.length == 0:
+            print('>> Lista vacía no hay nodos por eliminar <<')
+        else:
+            if self.validate_has_duplicate(value):
+                for item in self.show_list():
+                        if item == value:
+                            self.eliminate_by_value(item)
+                
+    def validate_has_duplicate(self,value):
+        cont=0
+        for item in self.show_list():
+            if item == value:
+                cont+=1
+        if cont >=2:
+            return True
+        else:
+            return False
+
+    def eliminate_by_value(self,value):
+        if self.head == None:
+            print("lista vacia")
+        elif self.head.value == value:
+            self.shift_node_sll()
+        elif self.tail.value == value:
+            self.delete_node_sll_pop()
+        else:
+            index=1
+            current_node=self.head
+            while current_node != None:
+                if current_node.value == value:
+                    previous_node = self.get_node(index- 1)
+                    previous_node.next = current_node.next
+                    current_node.next=None
+                current_node=current_node.next
+                index+=1
+            self.length-=1
+    def eliminate_all_duplicates(self):
+        if self.head is None:
+            return
+        current_node=self.head
+        values=set()
+        while current_node is not None:
+            if current_node.value in values:
+                self.eliminate_by_value(current_node.value)
+            values.add(current_node.value)
+            current_node=current_node.next
+        print(values)
+
+
+                    
+
+
+            
+
+
+
+                    
+
 
     def empty_list(self):
         if(self.length==0):

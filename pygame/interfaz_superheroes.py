@@ -1,13 +1,15 @@
 import pygame, sys, webbrowser
 from single_linked_list import SingleLinkedList
 from combo_box import ComboBox
+from pilas.PilasYColas import Pilas 
 class interfas:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((1100,700))
         pygame.display.set_caption("pygame")
-        #sll
+        #instancias
         self.inst=SingleLinkedList()
+        self.pila=Pilas()
         #colores
         self.negro = (0,0,0)
         self.blanco = (255,255,255)
@@ -57,6 +59,7 @@ class interfas:
         self.boolsupermancabeza=False
         self.booldetectivecabeza=False
         "control ventanas"
+        self.controlventanapilas=False
         self.controlventanaSLL=False
         self.controlventanaprincipal=True
         self.metodossll=False
@@ -70,9 +73,7 @@ class interfas:
         self.combo2 = ComboBox(self.screen ,["1"], self.combo2_rect, self.gris, "Arial", 22, 5, self.negro, self.negro, 40, "")
         #botones
         self.clickbotonSLL=False
-        self.clickbotonDLL=False
         self.clickbotonPilasyColas=False
-        self.clickArboles=False
         self.clickGrafos=False
         self.clickaceptarmetodos=False
         "boton para devolverse a la ventana principal"
@@ -95,9 +96,12 @@ class interfas:
                 
             if self.metodossll:
                 self.cambiarametodossll()
+
+            if self.controlventanapilas:
+                if self.pila.run():
+                    self.volveralinicio()
                 
-            
-            
+
             pygame.display.flip()
 
     def texto(self, text, color, dimensiones,x,y):
@@ -278,19 +282,18 @@ class interfas:
     def ventanaprincipal(self):
         self.screen.fill(self.rojoclaro)
         self.screen.blit(self.fondoventanaprincipal,(0,0))
-        botonSLL=pygame.draw.rect(self.screen,self.azul,(398,94,303,44))
-        self.boton("Single Linked List",self.azul,botonSLL,0, 16, 25,self.blanco,398,94,303,44)
-        botonDLL=pygame.draw.rect(self.screen,self.azul,(398,187,303,44))
-        self.boton("Double Linked List",self.azul,botonDLL,0, 16, 25,self.blanco,398,187,303,44)
+        botonSLL=pygame.draw.rect(self.screen,self.azul,(398,160,303,44))
+        self.boton("Single Linked List",self.azul,botonSLL,0, 16, 25,self.blanco,398,160,303,44)
         botonPilasYColas=pygame.draw.rect(self.screen,self.azul,(398,280,303,44))
         self.boton("Pilas Y Colas",self.azul,botonPilasYColas,0, 16, 25,self.blanco,398,280,303,44)
-        botonArboles=pygame.draw.rect(self.screen,self.azul,(398,373,303,44))
-        self.boton("Arboles",self.azul,botonArboles,0, 16, 25,self.blanco,398,373,303,44)
-        botonGrafos=pygame.draw.rect(self.screen,self.azul,(398,466,303,44))
-        self.boton("Grafos",self.azul,botonGrafos,0, 16, 25,self.blanco,398,466,303,44)
+        botonGrafos=pygame.draw.rect(self.screen,self.azul,(398,400,303,44))
+        self.boton("Grafos",self.azul,botonGrafos,0, 16, 25,self.blanco,398,400,303,44)
         if self.clickbotones(botonSLL,self.clickbotonSLL):
             self.controlventanaprincipal=False
             self.controlventanaSLL=True
+        if self.clickbotones(botonPilasYColas,self.clickbotonPilasyColas):
+            self.controlventanapilas=True
+            self.controlventanaprincipal=False
         self.texto("desarrolado por: santiago lesmes marin",self.negro,20,390,621)
         self.texto("@1 SEM - 2023",self.negro,20,500,651)
         self.screen.blit(self.iconogithub,(706,619))
@@ -322,6 +325,7 @@ class interfas:
 
     def volveralinicio(self):
         self.controlventanaSLL=False
+        self.controlventanapilas=False
         self.controlventanaprincipal=True
         self.metodossll=False
         self.boolbatmancabeza=False

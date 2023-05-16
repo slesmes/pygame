@@ -58,6 +58,7 @@ class Pilas:
         self.boolplantar1=False
         self.boolplantar2=False
         self.boolplantar3=False
+        self.clickrestar=False
         self.turno_jugador=0
         self.booleanosplantarse=[self.boolplantar1,self.boolplantar2,self.boolplantar3]
         #lista
@@ -106,8 +107,11 @@ class Pilas:
         self.texto("presione start para comenzar",self.blanco,20,15,32)
         start=pygame.draw.rect(self.screen,self.cafe,(312,30,128,38))
         self.boton("start",self.cafe,start,0, 16, 25,self.negro,312,30,128,38)
+        restart=pygame.draw.rect(self.screen,self.cafe,(312,90,128,38))
+        self.boton("restart",self.cafe,restart,0, 16, 25,self.negro,312,90,128,38)
         if self.clickbotones(start,self.clickstart):
             self.instcrupier.barajar()
+            print(self.instcrupier.baraja)
             self.repartir_cartas()
             self.actualizar_cartas_jugadores()
             self.empezar=True
@@ -115,6 +119,8 @@ class Pilas:
             self.empezar_partida(pedircartas,self.click_pedir)
             self.saber_turno()
             self.saber_gano()
+        if self.clickbotones(restart,self.clickrestar):
+            self.restart()
         self.poner_cartas_pantalla()
         self.poner_cartas_crupier()
 
@@ -280,3 +286,14 @@ class Pilas:
                 self.texto("tu puntaje es inferior al del crupier, perdiste",self.rojoclaro,20,player.textox,player.textoy)
             elif player.score<=21 and self.instcrupier.score>21:
                 self.texto("el crupier paso los 21, ganaste",self.verde,20,player.textox,player.textoy)
+
+    def restart(self):
+        for player in self.players:
+            player.cartas.clear()
+            player.score=0
+        self.instcrupier.baraja.clear()
+        self.instcrupier.cartas.clear()
+        self.instcrupier.score=0
+        self.empezar=False
+        self.turno_jugador=0
+        print(self.instcrupier.baraja)

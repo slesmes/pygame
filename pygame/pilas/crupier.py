@@ -16,8 +16,8 @@ class crupier:
     def actualizar_score(self):
         self.score=sum([self.valor_carta(carta) for carta in self.cartas])
         num_ases=self.cartas.count("1")
-        if self.score < 9 and num_ases:
-            self.score += 10
+        while self.score > 21 and num_ases:
+            self.score -= 10
             num_ases -= 1
 
     def actualizar_cartas(self):
@@ -33,7 +33,7 @@ class crupier:
     
     def valor_carta(self,carta):
         if carta == "as":
-            return 1
+            return 11
         elif carta == "j" or carta == "q" or carta == "k":
             return 10
         else:

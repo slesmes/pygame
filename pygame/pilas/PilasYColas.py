@@ -83,6 +83,7 @@ class Pilas:
             self.boton("inicio",self.cafe,inicio,0, 16, 25,self.negro,930,30,128,38)
             pygame.display.flip()
             if self.clickbotones(inicio,self.clickinicio):
+                self.restart()
                 return True
             else:
                 return False
@@ -109,7 +110,7 @@ class Pilas:
         self.boton("start",self.cafe,start,0, 16, 25,self.negro,312,30,128,38)
         restart=pygame.draw.rect(self.screen,self.cafe,(312,90,128,38))
         self.boton("restart",self.cafe,restart,0, 16, 25,self.negro,312,90,128,38)
-        if self.clickbotones(start,self.clickstart):
+        if self.clickbotones(start,self.clickstart) and not self.empezar:
             self.instcrupier.barajar()
             print(self.instcrupier.baraja)
             self.repartir_cartas()

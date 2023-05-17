@@ -13,7 +13,7 @@ class playerx:
     def actualizar_score(self):
         self.score=sum([self.valor_carta(carta) for carta in self.cartas])
         num_ases=self.cartas.count("1")
-        if self.score < 9 and num_ases:
+        if self.score < 11 and num_ases:
             self.score += 10
             num_ases -= 1
 
